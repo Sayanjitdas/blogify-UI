@@ -15,7 +15,7 @@ export default function Signup() {
     
     const inputHandler = (e,inputType) => {
         switch(inputType){
-            case 'firstname':
+            case 'firstName':
                 setFirstname(e.target.value)
             break
             case 'lastName':
@@ -25,9 +25,11 @@ export default function Signup() {
                 setEmail(e.target.value)
             break
             case 'password':
+                if(passwordError) setPasswordError(false) 
                 setPassword(e.target.value)
             break
             case 'passwordConfirm':
+                if(passwordError) setPasswordError(false) 
                 setConfirmPassword(e.target.value)
             break
             default:
@@ -46,11 +48,11 @@ export default function Signup() {
                 setTimeout(() => {
                     console.log(firstname,lastname,email)
                     setCompletion(100)
+                    console.log(history)
                     history.replace('/login')
                 },1000)
 
             }else{
-                console.log("here....")
                 setPasswordError(true)
                 setCompletion(0)
             }
