@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Login.css'
 
 export default function Login() {
@@ -54,7 +55,7 @@ export default function Login() {
                         <div className="card-body">
                             <form onSubmit={loginHandler} >
                                 <div className="mb-3">
-                                    <label className="form-label">Email/Username</label>
+                                    <label className="form-label">Email</label>
                                     <input
                                         type="text"
                                         className={`form-control ${usernameError ? "border-danger border-2" : null}`}
@@ -85,7 +86,7 @@ export default function Login() {
                             </form>
                         </div>
                         <div className="card-footer align-items-center">
-                            <p className="text-muted my-0 d-inline">Don't have an account?</p><a className="btn btn-link mb-1" href="/">Sign up</a>
+                            <p className="text-muted my-0 d-inline">Don't have an account?</p><Link className="btn btn-link mb-1" to="/signup">Sign up</Link>
                         </div>
                     </div>
                 </div>
