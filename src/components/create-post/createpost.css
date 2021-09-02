@@ -1,0 +1,12 @@
+.create-post-height{
+
+    min-height: 80vh;
+    margin-top: 10vh;
+}
+
+@media only screen and (max-width:576px){
+    .create-post-height{
+        min-height: 60vh;
+        margin-top: 10vh;
+    }
+}

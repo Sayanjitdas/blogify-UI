@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom"
-import { Link } from "react-router-dom"
+import { Link,NavLink } from "react-router-dom"
 
 export default function Navbar() {
 
@@ -18,13 +18,13 @@ export default function Navbar() {
                         <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                             <ul className="navbar-nav">
                                 <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="#">Home</a>
+                                    <NavLink className="nav-link" aria-current="page" exact to="/" activeClassName="active">Home</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Features</a>
+                                    <NavLink className="nav-link" exact to="/create-post" activeClassName="active">Create Post</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Pricing</a>
+                                    <a className="nav-link" to="/">Profile</a>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>

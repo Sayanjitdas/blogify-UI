@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import faceIcon from '../../assets/face.jpg'
+import thumb from '../../assets/thumb.jpg'
 
 export default function Posts({post}) {
     return (
@@ -9,7 +10,7 @@ export default function Posts({post}) {
             </Link>
             <div className="d-md-flex flex-row justify-content-between align-items-center">
                 <Link className="link-text" to="/login">
-                    <img className="img-thumbnail rounded-circle" src={faceIcon} alt="author" width="50px" />
+                    <img className="img-thumbnail rounded-circle" src={thumb} alt="author" width="50px" />
                     <p className="text-muted mb-0">{post.author}</p>
                 </Link>
                 <div className="text-md-end my-1 my-md-0">
