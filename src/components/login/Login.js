@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import './Login.css'
+import { login } from '../../apiservices';
 
 export default function Login() {
 
+    const history = useHistory()
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [usernameError, setUsernameError] = useState(false);
@@ -20,23 +22,26 @@ export default function Login() {
         setPassword(e.target.value)
     }
 
-    const loginHandler = (e) => {
+    const loginHandler = async (e) => {
         e.preventDefault()
         setSpinner(true)
         console.log(username, password)
 
         if (username && password) {
             //api call hook
-            setTimeout(() => {
-                if (username !== 'john') {
-                    setUsernameError(true)
-                }
-                if (password !== 'john123') {
-                    setPasswordError(true)
-                }
+            let response = await login(username, password)
+            if (response.error) {
+                setUsernameError(true)
+                setPasswordError(true)
                 setSpinner(false)
-            }, 1000)
-        }else{
+            } else {
+                setSpinner(false)
+                console.log(response.token)
+                //call to update context api service for the app
+                
+                history.replace('/')
+            }
+        } else {
             setUsernameError(true)
             setPasswordError(true)
             setSpinner(false)
@@ -46,9 +51,20 @@ export default function Login() {
 
     return (
         <div className="container-lg">
-            <div className="row justify-content-center align-items-center login">
-                <div className="col-12 col-md-8 col-lg-6 ">
-                    <div className="card">
+
+            <div className="row justify-content-center align-items-center minimum-height">
+                <div className="col-12 col-md-8 col-lg-6 position-relative">
+                    {
+                        usernameError && passwordError &&
+                        <div className="alert-position d-none d-md-block">
+                            <div className="alert alert-danger d-flex align-items-center alert-position-center shadow" role="alert">
+                                <div>
+                                    invalid username password
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div className="card shadow-sm">
                         <div className="shadow-sm card-header">
                             <h1 className="fw-bold text-muted text-center">Blogify</h1>
                         </div>
@@ -61,7 +77,6 @@ export default function Login() {
                                         className={`form-control ${usernameError ? "border-danger border-2" : null}`}
                                         id="username"
                                         onChange={userNameHandler}
-
                                     />
                                 </div>
                                 <div>

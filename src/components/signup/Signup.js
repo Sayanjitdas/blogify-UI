@@ -1,6 +1,7 @@
 import './signup.css'
 import { Link,useHistory } from 'react-router-dom'
 import { useState } from 'react'
+import { signup } from '../../apiservices'
 
 export default function Signup() {
 
@@ -37,34 +38,41 @@ export default function Signup() {
         }
     }
 
-    const signupHandler = (e) => {
+    const signupHandler = async (e) => {
         e.preventDefault()
         setCompletion(20)
         if(email && password && confirmPassword){
             setCompletion(40)
             if(password === confirmPassword){
-                setCompletion(60)
-                //api call mimic
-                setTimeout(() => {
-                    console.log(firstname,lastname,email)
-                    setCompletion(100)
-                    console.log(history)
-                    history.replace('/login')
-                },1000)
-
+                let data = {
+                    firstname,
+                    lastname,
+                    email,
+                    password,
+                    confirmPassword
+                }
+                setCompletion(80)
+                //api call 
+                let response = await signup(data)
+                if(response.error){
+                    setPasswordError(true)
+                    setCompletion(0)
+                }else{
+                    setCompletion(90)
+                    history.push('/login')
+                }
             }else{
                 setPasswordError(true)
                 setCompletion(0)
             }
         }
-
     }
 
     return (
         <div className="container-lg">
-            <div className="row justify-content-center align-items-center signup">
+            <div className="row justify-content-center align-items-center minimum-height">
                 <div className="col-12 col-md-6">
-                    <div className="card">
+                    <div className="card shadow-sm">
                         <div className="card-header shadow-sm">
                             <h1 className="fw-bold text-muted text-center">Blogify</h1>
                         </div>

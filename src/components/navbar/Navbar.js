@@ -5,6 +5,8 @@ export default function Navbar() {
 
     const location = useLocation()
 
+    const isAuthenticated = true;
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-success fixed-top shadow-sm">
             <div className="container-fluid">
@@ -16,7 +18,7 @@ export default function Navbar() {
                             <span className="navbar-toggler-icon"></span>
                         </button>
                         <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
-                            <ul className="navbar-nav">
+                            <ul className="navbar-nav text-sm-center">
                                 <li className="nav-item">
                                     <NavLink className="nav-link" aria-current="page" exact to="/" activeClassName="active">Home</NavLink>
                                 </li>
@@ -24,11 +26,19 @@ export default function Navbar() {
                                     <NavLink className="nav-link" exact to="/create-post" activeClassName="active">Create Post</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" to="/">Profile</a>
+                                    <NavLink className="nav-link" exact to="/profile" activeClassName="active">Profile</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>
+                                    {isAuthenticated ?
+                                         <a className="btn btn-sm btn-warning nav-link mx-md-2" to="/"><span className="text-muted">Logout</span></a>
+                                         :
+                                         <a className="btn btn-sm btn-warning nav-link mx-md-2" to="/login"><span className="text-muted">Login</span></a>
+                                    }
+                                   
                                 </li>
+                                {/* <li className="nav-item">
+                                    <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>
+                                </li> */}
                             </ul>
                         </div>
                     </>

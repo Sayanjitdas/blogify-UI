@@ -55,7 +55,7 @@ export default function Home() {
         }
     ]
 
-    const [posts, setPosts] = useState(data)
+    const [posts] = useState(data)
 
     return (
         <div className="container-lg">
@@ -63,7 +63,7 @@ export default function Home() {
                 <div className="col-md-8 col-12">
                     {
                         posts.map(post => (
-                            <Posts post={post} />
+                            <Posts post={post} key={post.id}/>
                         ))
                     }
                 </div>

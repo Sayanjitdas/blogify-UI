@@ -1,3 +1,8 @@
+a {
+    text-decoration: none;
+    color: grey
+}
+
 .create-post-height{
 
     min-height: 80vh;
@@ -10,3 +15,14 @@
         margin-top: 10vh;
     }
 }
+
+.ql-toolbar {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.ql-container {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+  
