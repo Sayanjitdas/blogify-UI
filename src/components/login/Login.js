@@ -2,8 +2,13 @@ import { useState } from 'react';
 import { Link,useHistory } from 'react-router-dom';
 import './Login.css'
 import { login } from '../../apiservices';
+import { useContext } from 'react';
+import { GlobalContext } from '../context/context';
+import { StoreUserAuthData } from '../context/localstorage';
 
 export default function Login() {
+
+    const {token,userData,auth} = useContext(GlobalContext)
 
     const history = useHistory()
     const [username, setUsername] = useState(null);
@@ -25,7 +30,6 @@ export default function Login() {
     const loginHandler = async (e) => {
         e.preventDefault()
         setSpinner(true)
-        console.log(username, password)
 
         if (username && password) {
             //api call hook
@@ -36,9 +40,12 @@ export default function Login() {
                 setSpinner(false)
             } else {
                 setSpinner(false)
-                console.log(response.token)
+                // console.log(response.token)
                 //call to update context api service for the app
-                
+                StoreUserAuthData(response.token,username)
+                token.setToken(response.token)
+                userData.setUser(username)
+                auth.setAuthenticated(true)
                 history.replace('/')
             }
         } else {

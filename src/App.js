@@ -7,31 +7,34 @@ import Details from "./components/detail/Details";
 import CreatePost from "./components/create-post/CreatePost";
 import Profile from "./components/profile/Profile";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { GlobalContext,useGlobalData } from "./components/context/context";
 import './App.css'
 
 
 function App() {
 
-  const isAuthenticated = true;
+  const globalData = useGlobalData()
 
   return (
     <BrowserRouter>
-      <Navbar />
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/details/:id">
-        {isAuthenticated ? <Details /> : <Redirect exact to="/login" />}
-        </Route>
-        <Route exact path="/create-post">
-        {isAuthenticated ? <CreatePost /> : <Redirect exact to="/login" />}
-        </Route>
-        <Route exact path="/profile">
-        {isAuthenticated ? <Profile /> : <Redirect exact to="/login" />}
-        </Route>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={Signup} />
-      </Switch>
-      <Footer />
+      <GlobalContext.Provider value={globalData}>
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/details/:id">
+          {globalData.auth.authenticated ? <Details /> : <Redirect exact to="/login" />}
+          </Route>
+          <Route exact path="/create-post">
+          {globalData.auth.authenticated ? <CreatePost /> : <Redirect exact to="/login" />}
+          </Route>
+          <Route exact path="/profile">
+          {globalData.auth.authenticated ? <Profile /> : <Redirect exact to="/login" />}
+          </Route>
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+        </Switch>
+        <Footer />
+      </GlobalContext.Provider>
     </BrowserRouter>
   );
 }

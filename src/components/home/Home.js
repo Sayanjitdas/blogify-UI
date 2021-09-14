@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import Posts from '../posts/Posts'
 import './home.css'
+import { useContext } from 'react'
+import { GlobalContext } from '../context/context'
 
 export default function Home() {
+
+    const {token} = useContext(GlobalContext)
 
     let data = [
         {

@@ -10,7 +10,6 @@ export const login = async (username,password) => {
 
         if(response.status === 200){
             response = await response.json()
-            console.log(response)
             return response;
         }
         return {

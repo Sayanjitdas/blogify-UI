@@ -1,11 +1,28 @@
-import { useLocation } from "react-router-dom"
+import { useLocation,useHistory } from "react-router-dom"
 import { Link,NavLink } from "react-router-dom"
+import { useContext, useEffect } from 'react';
+import { GlobalContext } from '../context/context';
+import { RemoveUserAuthData } from "../context/localstorage";
 
 export default function Navbar() {
 
     const location = useLocation()
+    const history = useHistory()
 
-    const isAuthenticated = true;
+    const globalData = useContext(GlobalContext)
+    let isAuthenticated = globalData.auth.authenticated;
+    
+    useEffect(() => {
+        isAuthenticated = globalData.auth.authenticated;
+    },[globalData.auth.authenticated,])
+
+    const logoutHandler = () => {
+        RemoveUserAuthData()
+        globalData.token.setToken(null)
+        globalData.userData.setUser(null)
+        globalData.auth.setAuthenticated(false)
+        history.replace('/')
+    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-success fixed-top shadow-sm">
@@ -30,15 +47,11 @@ export default function Navbar() {
                                 </li>
                                 <li className="nav-item">
                                     {isAuthenticated ?
-                                         <a className="btn btn-sm btn-warning nav-link mx-md-2" to="/"><span className="text-muted">Logout</span></a>
+                                         <button className="btn btn-sm btn-warning nav-link mx-md-2" onClick={logoutHandler}><span className="text-muted">Logout</span></button>
                                          :
-                                         <a className="btn btn-sm btn-warning nav-link mx-md-2" to="/login"><span className="text-muted">Login</span></a>
-                                    }
-                                   
+                                         <Link className="btn btn-sm btn-warning nav-link mx-md-2" to="/login"><span className="text-muted">Login</span></Link>
+                                    }                    
                                 </li>
-                                {/* <li className="nav-item">
-                                    <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">Disabled</a>
-                                </li> */}
                             </ul>
                         </div>
                     </>
