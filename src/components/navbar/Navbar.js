@@ -1,6 +1,6 @@
 import { useLocation,useHistory } from "react-router-dom"
 import { Link,NavLink } from "react-router-dom"
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect,useState } from 'react';
 import { GlobalContext } from '../context/context';
 import { RemoveUserAuthData } from "../context/localstorage";
 
@@ -10,10 +10,10 @@ export default function Navbar() {
     const history = useHistory()
 
     const globalData = useContext(GlobalContext)
-    let isAuthenticated = globalData.auth.authenticated;
+    const [isAuthenticated,setAuthenticated]= useState(globalData.auth.authenticated)
     
     useEffect(() => {
-        isAuthenticated = globalData.auth.authenticated;
+        setAuthenticated(globalData.auth.authenticated)
     },[globalData.auth.authenticated,])
 
     const logoutHandler = () => {

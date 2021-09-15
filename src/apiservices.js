@@ -49,3 +49,28 @@ export const signup = async (data) => {
         }
     }
 }
+
+export const articleList = async () => {
+    try{
+        let response = await fetch('http://localhost:8000/api/v1/',{
+            method: 'GET',
+            headers: {
+                'Content-Type':'application/json'
+            }
+        })
+        if(response.status===200){
+            response = await response.json()
+            return response
+        }else{
+            return {
+                "error":"unable to fetch articles"
+            }
+        }
+    }catch(err){
+        console.log(err)
+        return {
+            "error":err
+        }
+    }
+
+} 

@@ -6,10 +6,10 @@ export default function Postsub({post}) {
         <div className="d-md-flex flex-row justify-content-between align-items-center">
             <div className="link-text">
                 <img className="img-thumbnail rounded-circle" src={thumb} alt="author" width="50px" />
-                <p className="text-muted mb-0">{post.author}</p>
+                <p className="text-muted mb-0">{post.author.email}</p>
             </div>
             <div className="text-md-end my-1 my-md-0">
-                <p className="text-muted fs-6 mb-0">Wed Sep 01 2021</p>
+                <p className="text-muted fs-6 mb-0">{post.created_date}</p>
             </div>
         </div>
     )
