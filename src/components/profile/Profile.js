@@ -1,9 +1,8 @@
 import './profile.css'
 import thumb from '../../assets/thumb.jpg'
-import { useState } from 'react'
 
 export default function Profile() {
-    const [profilePic,setProfilePic] = useState({});
+    let profile_pic = null;
     
     const uploadProfilePic = (e) => {
         e.preventDefault()
@@ -11,7 +10,8 @@ export default function Profile() {
         let input = document.createElement('input')
         input.type = 'file'
         input.onchange = () => {
-            setProfilePic(input.files[0])
+            profile_pic = input.files[0]
+            console.log(profile_pic)
         }
         input.click()
     }
@@ -45,6 +45,9 @@ export default function Profile() {
                     <div className="mt-4">
                         <label htmlFor="Bio" className="form-label text-muted fw-bold">Bio</label>
                         <textarea className="form-control" rows="10"></textarea>
+                    </div>
+                    <div className="d-grid col-md-2">
+                        <button type="submit" className="btn btn-lg btn-success mt-3"><span className="fw-bold lead">Submit</span></button>
                     </div>
                 </form>
                 </div>
