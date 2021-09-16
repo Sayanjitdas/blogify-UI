@@ -9,12 +9,14 @@ export default function Home() {
 
     // const globalData = useContext(GlobalContext)
     const [posts, setPosts] = useState(null)
+    const [error,setError] = useState(false)
 
     useEffect(() => {
         (async () => {
             let response = await articleList()
             if (response.error) {
                 console.log("error")
+                setError(true)
             } else {
                 console.log(response)
                 setPosts(response)
@@ -36,11 +38,16 @@ export default function Home() {
                         </div>
                     </div> 
                     :
-                    <div className="col-12 d-flex justify-content-center align-items-center minimum-height">
-                        <div class="spinner-grow text-success" role="status">
-                            <span class="visually-hidden">Loading...</span>
+                    error ?
+                        <div className="d-flex justify-content-center align-items-center minimum-height">
+                            <p className="lead">Some issue in connection &#128528;</p>
                         </div>
-                    </div>
+                        :
+                        <div className="col-12 d-flex justify-content-center align-items-center minimum-height">
+                            <div className="spinner-grow text-success" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                 }
            
         </div>

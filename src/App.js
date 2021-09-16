@@ -6,6 +6,7 @@ import Home from "./components/home/Home";
 import Details from "./components/detail/Details";
 import CreatePost from "./components/create-post/CreatePost";
 import Profile from "./components/profile/Profile";
+import NotFound404 from "./components/404/NotFound404";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { GlobalContext,useGlobalData } from "./components/context/context";
 import './App.css'
@@ -32,6 +33,7 @@ function App() {
           </Route>
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
+          <Route component={NotFound404} />
         </Switch>
         <Footer />
       </GlobalContext.Provider>

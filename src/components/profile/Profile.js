@@ -12,7 +12,6 @@ export default function Profile() {
         input.type = 'file'
         input.onchange = () => {
             setProfilePic(input.files[0])
-            console.log(profilePic)
         }
         input.click()
     }
