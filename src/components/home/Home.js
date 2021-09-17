@@ -4,6 +4,7 @@ import './home.css'
 import { useContext } from 'react'
 import { GlobalContext } from '../context/context'
 import { articleList } from '../../apiservices'
+import Loader from '../loader/Loader'
 
 export default function Home() {
 
@@ -43,11 +44,7 @@ export default function Home() {
                             <p className="lead">Some issue in connection &#128528;</p>
                         </div>
                         :
-                        <div className="col-12 d-flex justify-content-center align-items-center minimum-height">
-                            <div className="spinner-grow text-success" role="status">
-                                <span className="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
+                    <Loader />
                 }
            
         </div>

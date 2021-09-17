@@ -22,7 +22,7 @@ function App() {
         <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/details/:id">
+          <Route exact path="/details/:slug">
           {globalData.auth.authenticated ? <Details /> : <Redirect exact to="/login" />}
           </Route>
           <Route exact path="/create-post">

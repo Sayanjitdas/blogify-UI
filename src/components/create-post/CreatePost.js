@@ -1,12 +1,30 @@
 import './createpost.css'
 import thumb from '../../assets/thumb.jpg'
 import Richtexteditor from './Richtexteditor'
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { GlobalContext } from '../context/context';
 import { Link } from 'react-router-dom';
+import { userDetails } from '../../apiservices';
+import {stateToHTML} from 'draft-js-export-html';
 
 export default function CreatePost() {
 
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState('')
+    const globalData = useContext(GlobalContext)
+    const [profilePic,setProfilePic] = useState(null)
+    const [name,setName] = useState(null)
+
+    useEffect(() => {
+        (async() => {
+            let response = await userDetails(globalData.token.token)
+            setProfilePic(response.profile_pic)
+            if(response.first_name && response.last_name) {
+                setName(response.first_name + ' ' + response.last_name)
+            }else{
+                setName(globalData.userData.data)
+            }
+        })()
+    },[])
 
     const postSubmission = (e) => {
         e.preventDefault()
@@ -19,9 +37,9 @@ export default function CreatePost() {
                 {/* on bigger screen only */}
                 <div className=" col-md-2 d-none d-md-block create-post-height border-end g-5">
                     <div className="text-center py-3">
-                        <img className="img-thumbnail rounded-circle img-fluid" src={thumb} alt="author" />
+                        <img className="img-thumbnail rounded-circle img-fluid" src={profilePic ? profilePic : thumb } alt="author" />
                     </div>
-                    <p className="fw-bold text-center text-muted">John doe</p>
+                    <p className="fw-bold text-center text-muted">{name}</p>
                     <Link to="/profile" className="btn btn-sm btn-outline-success d-grid">Edit Profile</Link>
                 </div>
 
@@ -41,7 +59,6 @@ export default function CreatePost() {
                                 <button type="submit" className="btn btn-lg btn-success mt-3"><span className="fw-bold lead">Post</span></button>
                             </div>
                         </form>
-                        {value && <div dangerouslySetInnerHTML={{ __html: value }} />}
                     </div>
                 </div>
             </div>

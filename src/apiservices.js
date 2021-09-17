@@ -1,3 +1,4 @@
+
 export const login = async (username,password) => {
     try{
         let response = await fetch('http://localhost:8000/accounts/login/',{
@@ -74,3 +75,53 @@ export const articleList = async () => {
     }
 
 } 
+
+export const articleDetails = async (slug,token) => {
+    try{
+        let response = await fetch(`http://localhost:8000/api/v1/${slug}/`,{
+            method: 'GET',
+            headers: {
+                'Content-Type':'application/json',
+                'Authorization': `Token ${token}`
+            }
+        })
+        if(response.status===200){
+            response = await response.json()
+            return response
+        }else{
+            return {
+                "error":"unable to fetch articles"
+            }
+        }
+    }catch(err){
+        console.log(err)
+        return {
+            "error":err
+        }
+    }
+}
+
+export const userDetails = async (token) => {
+    try{
+        let response = await fetch(`http://localhost:8000/accounts/obtain-user-details/`,{
+            method: 'GET',
+            headers: {
+                'Content-Type':'application/json',
+                'Authorization': `Token ${token}`
+            }
+        })
+        if(response.status===200){
+            response = await response.json()
+            return response
+        }else{
+            return {
+                "error":"unable to fetch articles"
+            }
+        }
+    }catch(err){
+        console.log(err)
+        return {
+            "error":err
+        }
+    }
+}
