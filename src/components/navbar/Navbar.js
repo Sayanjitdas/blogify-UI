@@ -36,6 +36,13 @@ export default function Navbar() {
                         </button>
                         <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
                             <ul className="navbar-nav text-sm-center">
+                                {isAuthenticated ? 
+                                <li className="nav-item">
+                                    <span className="nav-link text-white fw-light fst-italic disabled" aria-current="page">{globalData.userData.user}</span>
+                                </li>
+                                :
+                                null
+                                }
                                 <li className="nav-item">
                                     <NavLink className="nav-link" aria-current="page" exact to="/" activeClassName="active">Home</NavLink>
                                 </li>

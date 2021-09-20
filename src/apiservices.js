@@ -76,6 +76,35 @@ export const articleList = async () => {
 
 } 
 
+
+export const createArticle = async (token,data) => {
+    try{
+        let response = await fetch('http://localhost:8000/api/v1/create-post/',{
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json',
+                'Authorization': `Token ${token}`
+
+            },
+            body:JSON.stringify(data)
+        })
+        if(response.status===201){
+            response = await response.json()
+            return response
+        }else{
+            return {
+                "error":"unable to create article"
+            }
+        }
+    }catch(err){
+        console.log(err)
+        return {
+            "error":err
+        }
+    }
+
+} 
+
 export const articleDetails = async (slug,token) => {
     try{
         let response = await fetch(`http://localhost:8000/api/v1/${slug}/`,{
