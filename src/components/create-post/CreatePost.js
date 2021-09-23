@@ -5,7 +5,7 @@ import { useState, useContext, useEffect } from 'react';
 import { GlobalContext } from '../context/context';
 import { Link,useHistory } from 'react-router-dom';
 import { userDetails,createArticle } from '../../apiservices';
-import {stateToHTML} from 'draft-js-export-html';
+import {MiniLoader} from '../loader/Loader';
 
 export default function CreatePost() {
 
@@ -16,11 +16,13 @@ export default function CreatePost() {
     const [profilePic,setProfilePic] = useState(null)
     const [name,setName] = useState(null)
     const [spinner,setSpinner] = useState(false)
+    const [imageLoader,setImageLoader] = useState(true)
 
     useEffect(() => {
         (async() => {
             let response = await userDetails(globalData.token.token)
             setProfilePic(response.profile_pic)
+            setImageLoader(false)
             if(response.first_name && response.last_name) {
                 setName(response.first_name + ' ' + response.last_name)
             }else{
@@ -48,7 +50,11 @@ export default function CreatePost() {
                 {/* on bigger screen only */}
                 <div className=" col-md-2 d-none d-md-block create-post-height border-end g-5">
                     <div className="text-center py-3">
-                        <img className="img-thumbnail rounded-circle img-fluid" src={profilePic ? profilePic : thumb } alt="author" />
+                        {imageLoader ?
+                            <MiniLoader />
+                            :    
+                            <img className="img-thumbnail rounded-circle img-fluid" src={profilePic ? profilePic : thumb } alt="author" />
+                        }
                     </div>
                     <p className="fw-bold text-center text-muted">{name}</p>
                     <Link to="/profile" className="btn btn-sm btn-outline-success d-grid">Edit Profile</Link>

@@ -135,11 +135,36 @@ export const userDetails = async (token) => {
         let response = await fetch(`http://localhost:8000/accounts/obtain-user-details/`,{
             method: 'GET',
             headers: {
-                'Content-Type':'application/json',
+                'Content-Type': 'application/json',
                 'Authorization': `Token ${token}`
             }
         })
         if(response.status===200){
+            response = await response.json()
+            return response
+        }else{
+            return {
+                "error":"unable to fetch articles"
+            }
+        }
+    }catch(err){
+        console.log(err)
+        return {
+            "error":err
+        }
+    }
+}
+
+export const updateUserDetails = async (token,form) => {
+    try{
+        let response = await fetch(`http://localhost:8000/accounts/obtain-user-details/`,{
+            method: 'PUT',
+            headers: {
+                'Authorization': `Token ${token}`
+            },
+            body: form
+        })
+        if(response.status===201){
             response = await response.json()
             return response
         }else{

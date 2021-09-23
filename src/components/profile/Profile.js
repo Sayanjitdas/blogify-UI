@@ -1,8 +1,10 @@
 import { useState,useContext, useEffect } from 'react';
 import './profile.css'
 import thumb from '../../assets/thumb.jpg'
-import { userDetails } from '../../apiservices'
+import { userDetails,updateUserDetails } from '../../apiservices'
 import { GlobalContext } from '../context/context';
+import Spinner from '../loader/Spinner';
+import {MiniLoader} from '../loader/Loader';
 
 export default function Profile() {
     const [profilePic,setProfilePic] = useState(null)
@@ -10,6 +12,8 @@ export default function Profile() {
     const [firstName,setFirstName] = useState('')
     const [lastName,setLastName] = useState('')
     const [bio,setBio] = useState('')
+    const [spinner,setSpinner] = useState(false)
+    const [imageLoader,setImageLoader] = useState(true)
 
     const globalData = useContext(GlobalContext)
     
@@ -17,11 +21,11 @@ export default function Profile() {
         (async() => {
             let response = await userDetails(globalData.token.token)
             if(!response.error){
-                console.log(response)
-                setFirstName(response.first_name)
-                setLastName(response.last_name)
-                setBio(response.bio)
+                if(response.first_name) setFirstName(response.first_name)
+                if(response.last_name) setLastName(response.last_name)
+                if(response.bio) setBio(response.bio)
                 setProfilePic(response.profile_pic)
+                setImageLoader(false)
             }
         })()
     },[])
@@ -45,13 +49,40 @@ export default function Profile() {
         input.click()
     }
 
+
+    const submissionHandler = async(e) => {
+        e.preventDefault()
+        setSpinner(true)
+        let form = new FormData()
+        console.log(uploadPic)
+        form.append('first_name', firstName)
+        form.append('last_name',lastName)
+        form.append('bio',bio)
+        if(uploadPic) form.append('profile_pic',uploadPic)
+
+        //api call to update details
+        let response = await updateUserDetails(globalData.token.token,form)
+        if(!response.error){
+            console.log(response)
+            setSpinner(false)
+        }else{
+            console.log(response)
+            setSpinner(false)
+        }
+
+    } 
+
     return (
         <div className="container-lg minimum-height pt-5">
             <div className="row justify-content-center">
                 <div className="col-md-6">
-                <form>
+                <form onSubmit={submissionHandler}>
                     <div className="text-center mt-5">
-                        <img className="img-thumbnail rounded-circle img-fluid" src={profilePic ? profilePic : thumb } alt="author" />
+                        {imageLoader ? 
+                            <MiniLoader />
+                            :
+                            <img className="img-thumbnail rounded-circle img-fluid" src={profilePic ? profilePic : thumb } alt="author" />
+                        }
                     </div>
                     <div className="my-3 d-grid col-lg-3 mx-auto">
                         <button className="btn btn-sm btn-outline-success" onClick={uploadProfilePic} >Upload Profile Pic</button>
@@ -76,7 +107,15 @@ export default function Profile() {
                         <textarea className="form-control" rows="10" value={bio} onChange={(e) => setBio(e.target.value)}></textarea>
                     </div>
                     <div className="d-grid col-md-2">
-                        <button type="submit" className="btn btn-lg btn-success mt-3"><span className="fw-bold lead">Submit</span></button>
+                        <button type="submit" className="btn btn-lg btn-success mt-3">
+                            {
+                                spinner ?
+                                <Spinner size="lg"/>
+                                :
+                                <span className="fw-bold lead">Submit</span>
+                            }
+                           
+                        </button>
                     </div>
                 </form>
                 </div>
