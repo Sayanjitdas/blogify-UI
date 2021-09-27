@@ -5,6 +5,7 @@ import { login } from '../../apiservices';
 import { useContext } from 'react';
 import { GlobalContext } from '../context/context';
 import { StoreUserAuthData } from '../context/localstorage';
+import Spinner from '../loader/Spinner';
 
 export default function Login() {
 
@@ -100,8 +101,7 @@ export default function Login() {
                                     <button type="submit" className="btn btn-success shadow-sm">
                                         {spinner ?
                                             <>
-                                                <span className="m-2">Loging in</span>
-                                                <span className="spinner-border spinner-border-sm text-light"></span>
+                                                <Spinner text="Logging in" />
                                             </> : `Login`}
                                     </button>
                                 </div>

@@ -5,6 +5,7 @@ import { GlobalContext } from '../context/context'
 import { useParams } from 'react-router-dom'
 import { articleDetails } from '../../apiservices'
 import Loader from '../loader/Loader'
+import GiveLikeDislike from './GiveLikeDislike'
 
 export default function Details() {
 
@@ -29,11 +30,13 @@ export default function Details() {
                         <Postsub post={post} />
                         <hr />
                         {post.description && <div  className="resetting" dangerouslySetInnerHTML={{ __html: post.description }} />}
+                        <GiveLikeDislike 
+                            initdisabled={post.likes > 0 ? true : false} 
+                            initlike={post.likes > 0 ? 'likeFilled' : 'like'}/>
                     </> 
                 :
             <Loader />
         }
-
         </div>
     )
 }

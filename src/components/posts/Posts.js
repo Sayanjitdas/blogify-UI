@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Postsub from './Postsub'
+import LikeDisLikeCom from './LikeDisLikeCom'
 
 export default function Posts({post}) {
     return (
@@ -9,17 +10,7 @@ export default function Posts({post}) {
             </Link>
             <Postsub post={post}/>
             <hr />
-            <div className="d-flex flex-row justify-content-start">
-                <div>
-                    <span className="fw-light pe-2">20</span><i className="bi bi-hand-thumbs-up-fill text-success"></i>
-                </div>
-                <div className="ms-2">
-                    <span className="fw-ligt pe-2">20</span><i className="bi bi-hand-thumbs-down-fill text-warning"></i>
-                </div>
-                <div className="ms-2">
-                    <span className="fw-light pe-2">20</span><i className="bi bi-chat-left-text-fill text-muted"></i>
-                </div>
-            </div>
+            <LikeDisLikeCom post={post} />
         </div>
     )
 }
