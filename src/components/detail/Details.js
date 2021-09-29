@@ -3,7 +3,7 @@ import Postsub from '../posts/Postsub'
 import { useState, useContext, useEffect } from 'react'
 import { GlobalContext } from '../context/context'
 import { useParams } from 'react-router-dom'
-import { articleDetails } from '../../apiservices'
+import { articleDetails,LikePost } from '../../apiservices'
 import Loader from '../loader/Loader'
 import GiveLikeDislike from './GiveLikeDislike'
 
@@ -20,7 +20,20 @@ export default function Details() {
             let response = await articleDetails(slug,globalData.token.token)
             setPost(response)
         })()
+        
     },[])
+
+    //API call to like the post
+    const postLike = async () => {
+        let data = {
+            article_id: post.id,
+            user: globalData.userData.user
+        }
+        LikePost(globalData.token.token,data)
+        let response = await articleDetails(slug,globalData.token.token)
+        setPost(response)
+        return response.likes
+    }
 
     return (
         <div className="container-lg py-5 minimum-height">
@@ -32,7 +45,9 @@ export default function Details() {
                         {post.description && <div  className="resetting" dangerouslySetInnerHTML={{ __html: post.description }} />}
                         <GiveLikeDislike 
                             initdisabled={post.likes > 0 ? true : false} 
-                            initlike={post.likes > 0 ? 'likeFilled' : 'like'}/>
+                            initlike={post.likes > 0 ? 'likeFilled' : 'like'}
+                            postLike={postLike} 
+                        />
                     </> 
                 :
             <Loader />
