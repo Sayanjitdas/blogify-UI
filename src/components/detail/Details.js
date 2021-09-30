@@ -3,7 +3,7 @@ import Postsub from '../posts/Postsub'
 import { useState, useContext, useEffect } from 'react'
 import { GlobalContext } from '../context/context'
 import { useParams } from 'react-router-dom'
-import { articleDetails,LikePost } from '../../apiservices'
+import { articleDetails,LikePost,disLikePost } from '../../apiservices'
 import Loader from '../loader/Loader'
 import GiveLikeDislike from './GiveLikeDislike'
 
@@ -29,10 +29,23 @@ export default function Details() {
             article_id: post.id,
             user: globalData.userData.user
         }
-        LikePost(globalData.token.token,data)
+        await LikePost(globalData.token.token,data)
         let response = await articleDetails(slug,globalData.token.token)
         setPost(response)
         return response.likes
+    }
+
+    //API call to dislike the post
+    const postDisLike = async () => {
+        let data = {
+            article_id: post.id,
+            user: globalData.userData.user
+        }
+        await disLikePost(globalData.token.token,data)
+        let response = await articleDetails(slug,globalData.token.token)
+        setPost(response)
+        console.log(response)
+        return response.dislikes
     }
 
     return (
@@ -44,9 +57,12 @@ export default function Details() {
                         <hr />
                         {post.description && <div  className="resetting" dangerouslySetInnerHTML={{ __html: post.description }} />}
                         <GiveLikeDislike 
-                            initdisabled={post.likes > 0 ? true : false} 
+                            initlikedisabled={post.likes > 0 ? true : false} 
+                            initdislikedisabled={post.like > 0 ? true : false}
                             initlike={post.likes > 0 ? 'likeFilled' : 'like'}
+                            initdislike={post.dislikes > 0 ? 'likeFilled' : 'like'}
                             postLike={postLike} 
+                            postDislike={postDisLike}
                         />
                     </> 
                 :

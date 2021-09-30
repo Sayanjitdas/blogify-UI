@@ -207,3 +207,31 @@ export const LikePost = async (token,data) => {
         }
     }
 }
+
+export const disLikePost = async (token,data) => {
+    try{
+        console.log(token)
+        console.log(data)
+        let response = await fetch('http://localhost:8000/api/v1/dislike/',{
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            },
+            body: JSON.stringify(data)
+        })
+
+        if(response.status===201){
+            return response
+        }else{
+            return {
+                error: "unable to fetch data"
+            }
+        }
+    }catch(err){
+        console.log(err);
+        return {
+            error:err
+        }
+    }
+}
