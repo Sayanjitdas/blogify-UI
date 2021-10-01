@@ -1,7 +1,9 @@
 
+const BASE_URL = 'https://blogifyapi.herokuapp.com/'
+
 export const login = async (username,password) => {
     try{
-        let response = await fetch('http://localhost:8000/accounts/login/',{
+        let response = await fetch(`${BASE_URL}accounts/login/`,{
             method:"POST",
             headers:{
                 'Content-Type': 'application/json'
@@ -28,7 +30,7 @@ export const login = async (username,password) => {
 
 export const signup = async (data) => {
     try{
-        let response = await fetch('http://localhost:8000/accounts/signup/',{
+        let response = await fetch(`${BASE_URL}accounts/signup/`,{
             method:'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -53,7 +55,7 @@ export const signup = async (data) => {
 
 export const articleList = async () => {
     try{
-        let response = await fetch('http://localhost:8000/api/v1/',{
+        let response = await fetch(`${BASE_URL}api/v1/`,{
             method: 'GET',
             headers: {
                 'Content-Type':'application/json'
@@ -79,7 +81,7 @@ export const articleList = async () => {
 
 export const createArticle = async (token,data) => {
     try{
-        let response = await fetch('http://localhost:8000/api/v1/create-post/',{
+        let response = await fetch(`${BASE_URL}api/v1/create-post/`,{
             method: 'POST',
             headers: {
                 'Content-Type':'application/json',
@@ -107,7 +109,7 @@ export const createArticle = async (token,data) => {
 
 export const articleDetails = async (slug,token) => {
     try{
-        let response = await fetch(`http://localhost:8000/api/v1/${slug}/`,{
+        let response = await fetch(`${BASE_URL}api/v1/${slug}/`,{
             method: 'GET',
             headers: {
                 'Content-Type':'application/json',
@@ -132,7 +134,7 @@ export const articleDetails = async (slug,token) => {
 
 export const userDetails = async (token) => {
     try{
-        let response = await fetch(`http://localhost:8000/accounts/obtain-user-details/`,{
+        let response = await fetch(`${BASE_URL}accounts/obtain-user-details/`,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -157,7 +159,7 @@ export const userDetails = async (token) => {
 
 export const authorDetails = async (token,author) => {
     try{
-        let response = await fetch(`http://localhost:8000/accounts/obtain-user-details/${author}`,{
+        let response = await fetch(`${BASE_URL}accounts/obtain-user-details/${author}`,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -182,7 +184,7 @@ export const authorDetails = async (token,author) => {
 
 export const updateUserDetails = async (token,form) => {
     try{
-        let response = await fetch(`http://localhost:8000/accounts/obtain-user-details/`,{
+        let response = await fetch(`${BASE_URL}accounts/obtain-user-details/`,{
             method: 'PUT',
             headers: {
                 'Authorization': `Token ${token}`
@@ -209,7 +211,7 @@ export const LikePost = async (token,data) => {
     try{
         console.log(token)
         console.log(data)
-        let response = await fetch('http://localhost:8000/api/v1/like/',{
+        let response = await fetch(`${BASE_URL}api/v1/like/`,{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json',
@@ -237,7 +239,7 @@ export const disLikePost = async (token,data) => {
     try{
         console.log(token)
         console.log(data)
-        let response = await fetch('http://localhost:8000/api/v1/dislike/',{
+        let response = await fetch(`${BASE_URL}v1/dislike/`,{
             method: 'POST',
             headers:{
                 'Content-Type': 'application/json',

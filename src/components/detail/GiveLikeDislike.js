@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react/cjs/react.development"
+import { useState } from "react/cjs/react.development"
 
 const likedislikestyle = {
     like: "bi bi-hand-thumbs-up",

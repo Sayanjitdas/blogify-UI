@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import Posts from '../posts/Posts'
 import './home.css'
-import { useContext } from 'react'
-import { GlobalContext } from '../context/context'
 import { articleList } from '../../apiservices'
 import Loader from '../loader/Loader'
 
@@ -23,7 +21,7 @@ export default function Home() {
                 setPosts(response)
             }
         })()
-    }, [])
+    },[])
 
 
     return (

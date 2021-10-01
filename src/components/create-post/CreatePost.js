@@ -29,7 +29,7 @@ export default function CreatePost() {
                 setName(globalData.userData.data)
             }
         })()
-    },[])
+    })
 
     const postSubmission = async (e) => {
         e.preventDefault()
