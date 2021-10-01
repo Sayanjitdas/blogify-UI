@@ -155,6 +155,31 @@ export const userDetails = async (token) => {
     }
 }
 
+export const authorDetails = async (token,author) => {
+    try{
+        let response = await fetch(`http://localhost:8000/accounts/obtain-user-details/${author}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            }
+        })
+        if(response.status===200){
+            response = await response.json()
+            return response
+        }else{
+            return {
+                "error":"unable to fetch articles"
+            }
+        }
+    }catch(err){
+        console.log(err)
+        return {
+            "error":err
+        }
+    }
+}
+
 export const updateUserDetails = async (token,form) => {
     try{
         let response = await fetch(`http://localhost:8000/accounts/obtain-user-details/`,{

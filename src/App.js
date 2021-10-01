@@ -6,6 +6,7 @@ import Home from "./components/home/Home";
 import Details from "./components/detail/Details";
 import CreatePost from "./components/create-post/CreatePost";
 import Profile from "./components/profile/Profile";
+import AuthorProfile from "./components/profile/AuthorProfile";
 import NotFound404 from "./components/404/NotFound404";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { GlobalContext,useGlobalData } from "./components/context/context";
@@ -30,6 +31,9 @@ function App() {
           </Route>
           <Route exact path="/profile">
           {globalData.auth.authenticated ? <Profile /> : <Redirect exact to="/login" />}
+          </Route>
+          <Route exact path="/profile/:author">
+          {globalData.auth.authenticated ? <AuthorProfile /> : <Redirect exact to="/login" />}
           </Route>
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />

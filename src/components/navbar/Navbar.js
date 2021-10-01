@@ -54,7 +54,9 @@ export default function Navbar() {
                                 </li>
                                 <li className="nav-item">
                                     {isAuthenticated ?
-                                         <button className="btn btn-sm btn-warning nav-link mx-md-2" onClick={logoutHandler}><span className="text-muted">Logout</span></button>
+                                        <div className="d-grid">
+                                             <button className="btn btn-sm btn-warning nav-link mx-md-2" onClick={logoutHandler}><span className="text-muted">Logout</span></button>
+                                        </div>
                                          :
                                          <Link className="btn btn-sm btn-warning nav-link mx-md-2" to="/login"><span className="text-muted">Login</span></Link>
                                     }                    
